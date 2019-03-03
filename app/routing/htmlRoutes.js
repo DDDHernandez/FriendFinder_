@@ -3,11 +3,9 @@
 var path = require("path");
 
 // ROUTING
-
 module.exports = function(app) {
   // HTML GET Requests
   // Below code handles when users "visit" a page.
-  // In each of the below cases the user is shown an HTML page of content
 
   //GET request that displays survey page.
   app.get("/survey", function(req, res) {
@@ -19,8 +17,4 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/home.html"));
   });
 
-//   //The 404 Route (ALWAYS Keep this as the last route)
-//   app.get('*', function(req, res){
-//   res.status(404).sendFile(path.join(__dirname, "../public/404notfound.html"));
-// });
  };
