@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FriendFinder</title>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
+</head>
+<body style="background-color: #2fabaf">
+
+    <div class="container" style="background-color: grey">
+    
+        <h2>Survey Questions</h2>
+        <h4>All Questions Must Be Answered</h4>
+        <hr>
+    
+        <h3><strong>About You</strong></h3>
+        <h4>Name (Required)</h4>
+        <input type="text" id="name" class="form-control" required="">
+    
+        <h4>Link to Your Image (Required)</h4>
+        <input type="text" id="photo" class="form-control" required="">
+    
+        <hr>
+    
+        <span id="questionsarray"></span>
+
+        <br>
+        <br>
+    
+        <button type="submit" class="btn btn-info btn-lg btn-block" id="submit">
+        Submit</button>
+    
+        <hr>
+    </div>
+    
+    <div id="results-modal" class="modal fade" role="dialog" style="background-color: grey" >
+        <div class="modal-dialog">
+    
+        <div class="modal-content" style="background-color: #44487B">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h2 class="modal-title" style="color: whitesmoke"><strong>Best Match</strong></h2>
+            </div>
+            <div class="modal-body">
+            <h2 id="friend-name" style="color: whitesmoke"></h2>
+            <img id="friend-img" src="" alt="">
+            <h5 id="Scores" style="color: whitesmoke"></h5>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+    //get questions data
+    $.get("/data/questions", function(data) {
+        //loop through and add drop menu
+        for (var i = 0; i < data.length; i++) {
+            $("#questionsarray").append('<h3><strong>Question: '+(i+1)+'</strong></h3><h4>'+data[i].question+'</h4><select class="chosen-select" id=q'+(i+1)+
+            ' style="width 80;" ><option value=""></option><option value="1">1 (Strongly Disagree)</option><option value="2">2 (Disagree)</option><option value="3">3 (Partially Agree)</option><option value="4">4 (Agree)</option><option value="5">5 (Strongly Agree)</option></select><div class"chosen-container chosen-container-single" style="width: 300px"; title="" id="q'+(i+1)+
+            '_chosen"><a class="chosen-single chosen-default"><div><b></b></div></a><div class="chosen-drop"><div class="chosen-search"></div><ul class="chosen-results"></ul></div></div>')
+            }
+        })
+        var config = {
+        ".chosen-select": {},
+        ".chosen-select-deselect": {
+            allow_single_deselect: true
+        },
+        ".chosen-select-no-single": {
+            disable_search_threshold: 10
+        },
+        ".chosen-select-no-results": {
+            no_results_text: "Oh no, we found nothing for you!"
+        },
+        ".chosen-select-width": {
+            width: "95%"
+        }
+        };
+    
+        for (var selector in config) {
+        $(selector).chosen(config[selector]);
+        }
+    
+        $("#submit").on("click", function(event) {
+        event.preventDefault();
+        
+        function Formcheck() {
+            var isValid = true;
+            $(".form-control").each(function() {
+                //if no name or picture than no valid answer
+            if ($(this).val() === "") {
+                isValid = false;
+            }
+            });
+           
+            $(".chosen-select").each(function() {
+                //if all questions aren't answered not valid answer
+            if ($(this).val() === "") {
+                isValid = false;
+            }
+            });
+            return isValid;
+        }
+        //Grabbing value of each question from user
+        if (Formcheck()) {
+            var userData = {
+            name: $("#name").val(),
+            photo: $("#photo").val(),
+            scores: [
+                $("#q1").val(),
+                $("#q2").val(),
+                $("#q3").val(),
+                $("#q4").val(),
+                $("#q5").val(),
+                $("#q6").val(),
+                $("#q7").val(),
+                $("#q8").val(),
+                $("#q9").val(),
+                $("#q10").val()
+            ]
+            };
+            $("#name").val("")
+            $("#photo").val("")
+            //Post Best matched friend from results
+            $.post("/data/friends", userData, function(data) {
+    
+            $("#friend-name").text(data.name);
+            $("#friend-img").attr("src", data.photo);
+            $("#Scores").text(data.name + " results: " + data.scores)
+            $("#results-modal").modal("toggle");
+    
+            });
+        } else {
+            alert("You want to find your friend then give me what I need! Please fill out all questions");
+        }
+        });
+    </script>
+    </body>
+</html>
