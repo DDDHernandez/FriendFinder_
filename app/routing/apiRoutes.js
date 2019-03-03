@@ -40,16 +40,16 @@ module.exports = function(app) {
             YourFriends.push(totalComparisons);
         }
           // Find the lowest number
-        bestMatchValue=Math.min.apply(null,YourFriends)
+        bestMatchMath=Math.min.apply(null,YourFriends)
         //Taking results and using math.min to find lowest result
-        bestMatchIndex=YourFriends.indexOf(bestMatchValue)
-        bestfriend = friendsData[bestMatchIndex]
-        var newFriend = req.body;
-        //console.log(bestMatchValue)
+        bestMatch=YourFriends.indexOf(bestMatchMath)
+        bestfriend = friendsData[bestMatch]
+        var YournewFriend = req.body;
+        //console.log(bestMatchMath)
         console.log(bestfriend)
-        console.log(newFriend);
+        console.log(YournewFriend);
         //pushing new friend into friends array
-        friendsData.push(newFriend);
+        friendsData.push(YournewFriend);
         res.json(bestfriend);
     });
 }
