@@ -5,9 +5,8 @@
     <title>FriendFinder</title>
     <script src="https://code.jquery.com/jquery.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.css">
+    <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.css"> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
 </head>
 <body style="background-color: #2fabaf">
@@ -34,32 +33,32 @@
     
         <button type="submit" class="btn btn-info btn-lg btn-block" id="submit">
         Submit</button>
-    
-        <hr>
+      <br>
+      <br>
     </div>
-    
-    <div id="results-modal" class="modal" role="dialog" style="background-color: grey" >
-        <div class="modal-dialog">
-    
-        <div class="modal-content" style="background-color: #44487B">
+    <div class="modal" tabindex="-1" id="results-modal" role="dialog" style="background-color: grey">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content" style="background-color: #44487B">
             <div class="modal-header">
-           
-            <h2 class="modal-title" style="color: whitesmoke; text-align: left;"><strong>Best Match</strong></h2>
-            <button type="button" class="close" data-dismiss="modal">×</button>   
-        </div>
-            <div class="modal-body">
-            <h2 id="friend-name" style="color: whitesmoke"></h2>
-            <img id="friend-img" src="" alt="">
-            <h5 id="Scores" style="color: whitesmoke"></h5>
+              <h5 class="modal-title" id="exampleModalLabel" style="color: whitesmoke"><strong>Best Match: </strong></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+              <div class="modal-body">
+                <h2 id="friend-name" style="color: whitesmoke"></h2>
+                <img id="friend-img" src="" alt="">
+                <h5 id="Scores" style="color: whitesmoke"></h5>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
+          </div>
         </div>
-    
-        </div>
-    </div>
-    
+      </div>
+   <br>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
     <script type="text/javascript">
     //get questions data
     $.get("/data/questions", function(data) {
@@ -144,5 +143,5 @@
         }
         });
     </script>
-    </body>
+  
 </html>
